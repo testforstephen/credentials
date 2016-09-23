@@ -85,11 +85,13 @@ function setupssh(credentialId) {
                 injectEnvScript += ",[key: 'DISPLAY', value:'123.456']";
             }
             injectEnvScript += "] \n" + injectEnvTemplate;
+            console.log(injectEnvScript);
             common.executeScript(jenkinsUrl, injectEnvScript, function (error, data) {
                 if (error) {
                     console.log('Setup ssh environment variables failed with error "' + error + '"');
                     exit(1);
                 } else {
+                    console.log('Inject succeed.');
                     exit(0);
                 }
             });
