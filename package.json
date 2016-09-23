@@ -1,0 +1,10 @@
+{
+  "name": "docker-tools",
+  "version": "1.0.0",
+  "dependencies": {
+    "shelljs": "^0.7.4",
+    "sync-request": "^3.0.1"
+  },
+  "devDependencies": {},
+  "license": "ISC"
+}
