@@ -6,10 +6,12 @@ case `uname` in
 esac
 
 if [ -x "$basedir/node" ]; then
-  "$basedir/node"  "$basedir/setupSSH.js" "$@"
+  "$basedir/node"  "$basedir/scripts/setupssh.js" "$@"
+  source "/tmp/envVar.sh"
   ret=$?
 else 
-  node  "$basedir/setupSSH.js" "$@"
+  node  "$basedir/scripts/setupssh.js" "$@"
+  source "/tmp/envVar.sh"
   ret=$?
 fi
 exit $ret
