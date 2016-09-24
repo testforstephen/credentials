@@ -74,10 +74,10 @@ function setupssh(credentialId) {
     common.executeScript(jenkinsUrl, scriptText, function (error, data) {
         if (error) {
             console.log('Setup ssh key failed with error "' + error + '"');
-            exit(1);
+            process.exit(1);
         } else if (!data || !data.trim()) {
             console.log('Cannot find the corresponding credential info via credentialId. Probably it doesn\'t exist.');
-            exit(1);
+            process.exit(1);
         } else {
             // console.log('Setup ssh key successfully.');
             var credential = JSON.parse(data);
@@ -88,7 +88,7 @@ function setupssh(credentialId) {
             var gitPassFile = createUnixSshAskpass(sshkeyFolder, credential.value.passphrase);
             var envVarFile = createEnvVarFile(gitSshFile, gitPassFile);
             process.stdout.write(envVarFile);
-            exit(0);
+            process.exit(0);
             // var injectEnvTemplate = fs.readFileSync(path.join(__dirname, 'injectEnv.groovy'));
             // var injectEnvScript = "def envs=["
             //     + "[key: 'GIT_SSH', value: '" + gitSshFile + "']," 
@@ -115,9 +115,10 @@ function setupssh(credentialId) {
     });
 };
 
+console.log(process.argv);
 if (process.argv.length < 3) {
     console.log('[Failed] Please specify credentialId parameter.');
-    exit(1);
+    process.exit(1);
 }
 
 setupssh(process.argv[2]);
