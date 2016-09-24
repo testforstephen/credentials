@@ -1,9 +1,7 @@
 
-def build = Thread.currentThread().executable
+def currentBuild = Thread.currentThread().executable
+def envVars = [];
 envs.each {
-    def pa = new hudson.model.ParametersAction([
-        new hudson.model.StringParameterValue(it['key'], it['value'])
-    ])
-    build.addAction(pa)
+    envVars.push(new hudson.model.StringParameterValue(it['key'], it['value']))
 }
-
+currentBuild.addAction(new hudson.model.ParametersAction(envVars))
