@@ -1,5 +1,3 @@
-require('shelljs/global');
-
 var exec = require('child_process').exec;
 var request = require('request');
 var fs = require('fs');
