@@ -1,7 +1,6 @@
 #!/bin/bash -xe
 echo "start..."
-basedir=$( cd -P -- "$(dirname -- "$(command -v -- "$0")")" && pwd -P )
-echo $basedir
+basedir='/home/jenkins/workspace/testJob'
 
 case `uname` in
     *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
