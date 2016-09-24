@@ -1,35 +1,7 @@
 
-class VariableInjectionAction implements hudson.model.EnvironmentContributingAction {
-    private String key
-    private String value
-
-    public VariableInjectionAction(String key, String value) {
-        this.key = key
-        this.value = value
-    }
-
-    public void buildEnvVars(hudson.model.AbstractBuild build, hudson.EnvVars envVars) {
-
-        if (envVars != null && key != null && value != null) {
-            envVars.put(key, value);
-        }
-    }
-
-    public String getDisplayName() {
-        return "VariableInjectionAction";
-    }
-
-    public String getIconFileName() {
-        return null;
-    }
-
-    public String getUrlName() {
-        return null;
-    }
-}
-
 def currentBuild = Thread.currentThread().executable
+def envVars = new hudson.EnvVars()
 envs.each {
-    currentBuild.addAction(new VariableInjectionAction(it['key'], it['value']))
-    currentBuild.getEnvironment()
+    envVars.put(it['key'], it['value'])
 }
+currentBuild.environments.add(hudson.model.Environment.create(envVars))
