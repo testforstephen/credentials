@@ -1,5 +1,6 @@
 
-def currentBuild = Thread.currentThread().executable
+def item = hudson.model.Hudson.instance.getItemByFullName(jobName)
+def currentBuild = item.getBuildByNumber(buildNumber)
 def envVars = new hudson.EnvVars()
 envs.each {
     envVars.put(it['key'], it['value'])

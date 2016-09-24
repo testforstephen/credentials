@@ -84,7 +84,10 @@ function setupssh(credentialId) {
             if (!process.env['DISPLAY']) {
                 injectEnvScript += ",[key: 'DISPLAY', value:'123.456']";
             }
-            injectEnvScript += "] \n" + injectEnvTemplate;
+            injectEnvScript += "] \n";
+            injectEnvScript += "def jobName='" + process.env.JOB_NAME + "'\n";
+            injectEnvScript += "def buildNumber='" + process.env.BUILD_NUMBER + "'\n";
+            injectEnvScript += injectEnvTemplate;
             console.log(injectEnvScript);
             common.executeScript(jenkinsUrl, injectEnvScript, function (error, data) {
                 if (error) {
