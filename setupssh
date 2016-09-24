@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 echo "start..."
 echo "$BASH_SOURCE"
 SOURCE="${BASH_SOURCE[0]}"
