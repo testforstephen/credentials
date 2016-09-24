@@ -1,7 +1,35 @@
 
-def currentBuild = Thread.currentThread().executable
-def envVars = [];
-envs.each {
-    envVars.push(new hudson.model.StringParameterValue(it['key'], it['value']))
+class VariableInjectionAction implements hudson.model.EnvironmentContributingAction {
+    private String key
+    private String value
+
+    public VariableInjectionAction(String key, String value) {
+        this.key = key
+        this.value = value
+    }
+
+    public void buildEnvVars(hudson.model.AbstractBuild build, hudson.EnvVars envVars) {
+
+        if (envVars != null && key != null && value != null) {
+            envVars.put(key, value);
+        }
+    }
+
+    public String getDisplayName() {
+        return "VariableInjectionAction";
+    }
+
+    public String getIconFileName() {
+        return null;
+    }
+
+    public String getUrlName() {
+        return null;
+    }
 }
-currentBuild.addAction(new hudson.model.ParametersAction(envVars))
+
+def currentBuild = Thread.currentThread().executable
+envs.each {
+    currentBuild.addAction(new VariableInjectionAction(it['key'], it['value']))
+    currentBuild.getEnvironment()
+}
