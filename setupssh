@@ -1,17 +1,20 @@
 #!/bin/bash -xe
 echo "start..."
 basedir='/home/jenkins/workspace/testJob'
+echo "$1"
+echo "$@"
+
 
 case `uname` in
     *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
 esac
 
 if [ -x "$basedir/node" ]; then
-  "$basedir/node"  "$basedir/scripts/setupssh.js" "$@"
+  "$basedir/node"  "$basedir/scripts/setupssh.js" "$1"
   . "/tmp/envVar.sh"
   ret=$?
 else 
-  node  "$basedir/scripts/setupssh.js" "$@"
+  node  "$basedir/scripts/setupssh.js" "$1"
   . "/tmp/envVar.sh"
   ret=$?
 fi
