@@ -1,4 +1,4 @@
-#!/bin/bash -xe
+#!/bin/sh
 echo "start..."
 basedir='/home/jenkins/workspace/testJob'
 echo "$1"
