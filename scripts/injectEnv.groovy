@@ -1,9 +1,36 @@
 
-def item = hudson.model.Hudson.instance.getItemByFullName(jobName)
-def currentBuild = item.getBuildByNumber(buildNumber)
-def envVars = new hudson.EnvVars()
-envs.each {
-    envVars.put(it['key'], it['value'])
-    println it['key'] + ':' + it['value']
+class VariableInjectionAction implements hudson.model.EnvironmentContributingAction {
+    private String key
+    private String value
+
+    public VariableInjectionAction(String key, String value) {
+        this.key = key
+        this.value = value
+    }
+
+    public void buildEnvVars(hudson.model.AbstractBuild build, hudson.EnvVars envVars) {
+
+        if (envVars != null && key != null && value != null) {
+            envVars.put(key, value);
+        }
+    }
+
+    public String getDisplayName() {
+        return "VariableInjectionAction";
+    }
+
+    public String getIconFileName() {
+        return null;
+    }
+
+    public String getUrlName() {
+        return null;
+    }
 }
-currentBuild.getEnvironments().add(hudson.model.Environment.create(envVars))
+
+def item = jenkins.model.Jenkins.getInstance().getItemByFullName(jobName)
+def currentBuild = item.getBuildByNumber(buildNumber)
+envs.each {
+    currentBuild.addAction(new VariableInjectionAction(it['key'], it['value']))
+    currentBuild.getEnvironment()
+}
