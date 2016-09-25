@@ -2,19 +2,9 @@
 echo "start..."
 basedir='/home/jenkins/workspace/testJob'
 
-case `uname` in
-    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;
-esac
+node  "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID" | .
+ret=$?
 
-if [ -x "$basedir/node" ]; then
-  "$basedir/node"  "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID"
-  . "/tmp/envVar.sh"
-  ret=$?
-else 
-  node  "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID"
-  . "/tmp/envVar.sh"
-  ret=$?
-fi
 if [ $ret -ne 0 ]; then
   exit $ret
 fi
