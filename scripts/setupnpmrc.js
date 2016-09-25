@@ -26,7 +26,8 @@ function setupNpmrc(credentialId) {
         } else {
             var credential = JSON.parse(data);
             var npmrc =  new Buffer(credential.value, 'base64').toString("ascii");
-            saveNpmrc(npmrc);
+            var npmrcFile = saveNpmrc(npmrc);
+            console.log('save npmrc to ' + npmrcFile);
             process.exit(0);
         }
     });
