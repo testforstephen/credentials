@@ -11,7 +11,7 @@ function getUnixSsh() {
 }
 
 function generateSshDir() {
-    var dir = path.join('/tmp', '.ssh');
+    var dir = path.join('/tmp', 'ssh' + new Date().getTime());
     if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
     }
