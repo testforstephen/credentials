@@ -106,6 +106,7 @@ function setupssh(credentialId) {
                      console.log('Setup ssh environment variables failed with error "' + error + '"');
                      process.exit(1);
                  } else {
+                     console.log('GIT_SSH:' + process.env['GIT_SSH']);
                      console.log(data);
                      console.log('Inject succeed.');
                      process.exit(0);
