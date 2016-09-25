@@ -67,7 +67,7 @@ function createEnvVarFile(gitSshFile, gitPassFile) {
 
 function setupssh(credentialId) {
     //var jenkinsUrl = 'https://jinbo:6d716e8c7fdf5607eb331562fc1d3d8d@docsci.cloudapp.net/scriptText';
-    var jenkinsUrl = 'http://admin:test1@localhost:8080/scriptText';
+    var jenkinsUrl = 'http://admin:test1@sitexpci-internal.southeastasia.cloudapp.azure.com:8080/scriptText';
     // var jenkinsUrl = common.getJenkinsUrl();
     var template = fs.readFileSync(path.join(__dirname, 'credential.groovy'));
     var scriptText = 'def credentialId="' + credentialId + '" \n ' + template;
