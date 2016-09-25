@@ -15,6 +15,6 @@ else
   . "/tmp/envVar.sh"
   ret=$?
 fi
-if [ $ret ]; then
+if [ $ret -ne 0 ]; then
   exit $ret
 fi
