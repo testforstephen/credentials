@@ -8,4 +8,4 @@ if [ $ret -ne 0 ]; then
   exit $ret
 fi
 
-: $(. /tmp/envVars.sh)
+: $(. /tmp/envVar.sh)
