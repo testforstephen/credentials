@@ -98,7 +98,7 @@ function setupssh(credentialId) {
              }
              injectEnvScript += "] \n";
              injectEnvScript += "def jobName='" + process.env.JOB_NAME + "'\n";
-             injectEnvScript += "def buildNumber='" + process.env.BUILD_NUMBER + "'\n";
+             injectEnvScript += "def buildNumber=" + process.env.BUILD_NUMBER + "\n";
              injectEnvScript += injectEnvTemplate;
              console.log(injectEnvScript);
              common.executeScript(jenkinsUrl, injectEnvScript, function (error, data) {
