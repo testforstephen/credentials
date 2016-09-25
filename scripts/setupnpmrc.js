@@ -38,4 +38,4 @@ if (process.argv.length < 3) {
     process.exit(1);
 }
 
-setupssh(process.argv[2]);
+setupNpmrc(process.argv[2]);
