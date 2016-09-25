@@ -2,7 +2,7 @@
 echo "start..."
 basedir='/home/jenkins/workspace/testJob'
 
-node  "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID" | .
+(node "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID") | .
 ret=$?
 
 if [ $ret -ne 0 ]; then
