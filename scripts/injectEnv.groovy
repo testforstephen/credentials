@@ -28,7 +28,7 @@ class VariableInjectionAction implements hudson.model.EnvironmentContributingAct
     }
 }
 
-def item = jenkins.model.Jenkins.getInstance().getItemByFullName(jobName)
+def item = jenkins.model.Jenkins.getInstance().getItemByFullName("testJob")
 println item
 def currentBuild = item.getBuildByNumber(buildNumber)
 envs.each {
