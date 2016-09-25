@@ -87,7 +87,7 @@ function setupssh(credentialId) {
             var gitSshFile = createUnixGitSSH(sshkeyFolder, sshkeyFile);
             var gitPassFile = createUnixSshAskpass(sshkeyFolder, credential.value.passphrase);
             var envVarFile = createEnvVarFile(gitSshFile, gitPassFile);
-            process.stdout.write(envVarFile);
+            console.log(envVarFile);
             process.exit(0);
             // var injectEnvTemplate = fs.readFileSync(path.join(__dirname, 'injectEnv.groovy'));
             // var injectEnvScript = "def envs=["
