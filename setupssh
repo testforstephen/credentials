@@ -11,11 +11,11 @@ case `uname` in
 esac
 
 if [ -x "$basedir/node" ]; then
-  "$basedir/node"  "$basedir/scripts/setupssh.js" "$1"
+  "$basedir/node"  "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID"
   . "/tmp/envVar.sh"
   ret=$?
 else 
-  node  "$basedir/scripts/setupssh.js" "$1"
+  node  "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID"
   . "/tmp/envVar.sh"
   ret=$?
 fi

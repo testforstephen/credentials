@@ -67,12 +67,11 @@ function createEnvVarFile(gitSshFile, gitPassFile) {
 
 function setupssh(credentialId) {
     //var jenkinsUrl = 'https://jinbo:6d716e8c7fdf5607eb331562fc1d3d8d@docsci.cloudapp.net/scriptText';
-    var scriptTextUrl = 'http://admin:test1@sitexpci-internal.southeastasia.cloudapp.azure.com:8080/scriptText';
-    var scriptUrl = 'http://admin:test1@sitexpci-internal.southeastasia.cloudapp.azure.com:8080/script';
+    var jenkinsUrl = 'http://admin:test1@sitexpci-internal.southeastasia.cloudapp.azure.com:8080/scriptText';
     // var jenkinsUrl = common.getJenkinsUrl();
     var template = fs.readFileSync(path.join(__dirname, 'credential.groovy'));
     var scriptText = 'def credentialId="' + credentialId + '" \n ' + template;
-    common.executeScript(scriptTextUrl, scriptText, function (error, data) {
+    common.executeScript(jenkinsUrl, scriptText, function (error, data) {
         if (error) {
             console.log('Setup ssh key failed with error "' + error + '"');
             process.exit(1);
@@ -88,31 +87,30 @@ function setupssh(credentialId) {
             var gitSshFile = createUnixGitSSH(sshkeyFolder, sshkeyFile);
             var gitPassFile = createUnixSshAskpass(sshkeyFolder, credential.value.passphrase);
             var envVarFile = createEnvVarFile(gitSshFile, gitPassFile);
-            //process.stdout.write(envVarFile);
-            //process.exit(0);
-            var injectEnvTemplate = fs.readFileSync(path.join(__dirname, 'injectEnv.groovy'));
-            var injectEnvScript = "def envs=["
-                 + "[key: 'GIT_SSH', value: '" + gitSshFile + "']," 
-                 + "[key: 'SSH_ASKPASS', value: '" + gitSshFile + "']";
-            if (!process.env['DISPLAY']) {
-                 injectEnvScript += ",[key: 'DISPLAY', value:'123.456']";
-             }
-             injectEnvScript += "] \n";
-             injectEnvScript += "def jobName='" + process.env.JOB_NAME + "'\n";
-             injectEnvScript += "def buildNumber=" + process.env.BUILD_NUMBER + "\n";
-             injectEnvScript += injectEnvTemplate;
-             console.log(injectEnvScript);
-             common.executeScript(scriptUrl, injectEnvScript, function (error, data) {
-                 if (error) {
-                     console.log('Setup ssh environment variables failed with error "' + error + '"');
-                     process.exit(1);
-                 } else {
-                     console.log('GIT_SSH:' + process.env['GIT_SSH']);
-                     console.log(data);
-                     console.log('Inject succeed.');
-                     process.exit(0);
-                 }
-             });
+            process.stdout.write(envVarFile);
+            process.exit(0);
+            // var injectEnvTemplate = fs.readFileSync(path.join(__dirname, 'injectEnv.groovy'));
+            // var injectEnvScript = "def envs=["
+            //     + "[key: 'GIT_SSH', value: '" + gitSshFile + "']," 
+            //     + "[key: 'SSH_ASKPASS', value: '" + gitSshFile + "']";
+            // if (!process.env['DISPLAY']) {
+            //     injectEnvScript += ",[key: 'DISPLAY', value:'123.456']";
+            // }
+            // injectEnvScript += "] \n";
+            // injectEnvScript += "def jobName='" + process.env.JOB_NAME + "'\n";
+            // injectEnvScript += "def buildNumber='" + process.env.BUILD_NUMBER + "'\n";
+            // injectEnvScript += injectEnvTemplate;
+            // console.log(injectEnvScript);
+            // common.executeScript(jenkinsUrl, injectEnvScript, function (error, data) {
+            //     if (error) {
+            //         console.log('Setup ssh environment variables failed with error "' + error + '"');
+            //         exit(1);
+            //     } else {
+            //         console.log(data);
+            //         console.log('Inject succeed.');
+            //         exit(0);
+            //     }
+            // });
         }
     });
 };
