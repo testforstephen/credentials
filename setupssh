@@ -1,5 +1,4 @@
 #!/bin/sh
-echo "start..."
 basedir='/home/jenkins/workspace/testJob'
 
 node "$basedir/scripts/setupssh.js" "$SSH_CREDENTIALID"
