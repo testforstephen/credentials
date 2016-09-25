@@ -29,7 +29,7 @@ def getCredential(credentialId) {
             result = creds.findResult { it.id == credentialId ? it : null }
             if (result) {
                 def encodeSecret = result.getSecret().toString().bytes.encodeBase64().toString()
-                return "{type:\"Secret\", value:\"${encodeSecret}\"}"
+                return "{\"type\":\"Secret\", \"value\":\"${encodeSecret}\"}"
             }
         }
     }
