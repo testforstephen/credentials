@@ -87,30 +87,30 @@ function setupssh(credentialId) {
             var gitSshFile = createUnixGitSSH(sshkeyFolder, sshkeyFile);
             var gitPassFile = createUnixSshAskpass(sshkeyFolder, credential.value.passphrase);
             var envVarFile = createEnvVarFile(gitSshFile, gitPassFile);
-            process.stdout.write(envVarFile);
-            process.exit(0);
-            // var injectEnvTemplate = fs.readFileSync(path.join(__dirname, 'injectEnv.groovy'));
-            // var injectEnvScript = "def envs=["
-            //     + "[key: 'GIT_SSH', value: '" + gitSshFile + "']," 
-            //     + "[key: 'SSH_ASKPASS', value: '" + gitSshFile + "']";
-            // if (!process.env['DISPLAY']) {
-            //     injectEnvScript += ",[key: 'DISPLAY', value:'123.456']";
-            // }
-            // injectEnvScript += "] \n";
-            // injectEnvScript += "def jobName='" + process.env.JOB_NAME + "'\n";
-            // injectEnvScript += "def buildNumber='" + process.env.BUILD_NUMBER + "'\n";
-            // injectEnvScript += injectEnvTemplate;
-            // console.log(injectEnvScript);
-            // common.executeScript(jenkinsUrl, injectEnvScript, function (error, data) {
-            //     if (error) {
-            //         console.log('Setup ssh environment variables failed with error "' + error + '"');
-            //         exit(1);
-            //     } else {
-            //         console.log(data);
-            //         console.log('Inject succeed.');
-            //         exit(0);
-            //     }
-            // });
+            //process.stdout.write(envVarFile);
+            //process.exit(0);
+            var injectEnvTemplate = fs.readFileSync(path.join(__dirname, 'injectEnv.groovy'));
+            var injectEnvScript = "def envs=["
+                 + "[key: 'GIT_SSH', value: '" + gitSshFile + "']," 
+                 + "[key: 'SSH_ASKPASS', value: '" + gitSshFile + "']";
+            if (!process.env['DISPLAY']) {
+                 injectEnvScript += ",[key: 'DISPLAY', value:'123.456']";
+             }
+             injectEnvScript += "] \n";
+             injectEnvScript += "def jobName='" + process.env.JOB_NAME + "'\n";
+             injectEnvScript += "def buildNumber='" + process.env.BUILD_NUMBER + "'\n";
+             injectEnvScript += injectEnvTemplate;
+             console.log(injectEnvScript);
+             common.executeScript(jenkinsUrl, injectEnvScript, function (error, data) {
+                 if (error) {
+                     console.log('Setup ssh environment variables failed with error "' + error + '"');
+                     process.exit(1);
+                 } else {
+                     console.log(data);
+                     console.log('Inject succeed.');
+                     process.exit(0);
+                 }
+             });
         }
     });
 };
